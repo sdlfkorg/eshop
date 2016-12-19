@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+	{{ sausage_list}}
+  {% for sausage in sausage_list %}
+    <div>
+      {{ sausage.name }} ${{ sausage.current_price }}
+    </div>
+  {% endfor %}
+</body>
+</html>
