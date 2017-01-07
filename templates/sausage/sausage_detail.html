@@ -20,57 +20,33 @@
 </style>
 
 
-
-
 <body>
+
 
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-3">
-				<!-- category list -->
-				<ul class="list-group">        
-					{% for category in categories %}
-					<li class="list-group-item">
-						<a href="{% url 'sausage_list' category=category.name %}">               {{ category.name }} </a>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-
-			<div class="col-xs-9">
-				{% for sausage in sausage_list%}
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">
-						<a href="">          
-						{{ sausage.name}} | 產地：{{ sausage.place_of_origin }}
-					    </a>
-						</h3>
-					</div>
-					<div class="panel-body">
-						<a href="">      
-							{{ sausage.desription|truncatechars:50 }}
-						</a>
-					</div>
-					<div class="panel-footer">
-						售價：{{ sausage.current_price}}, 種類：{{ sausage.category }}
-					</div>	
+			<div class="col-xs-6 col-xs-offset-3">
+				<div class="page-header">
+					<h1>{{ sausage.name}} <small>{{ sausage.category }}, ${{ sausage.current_price }}</small></h1>
 				</div>
-				{% endfor%}
-			</div>		
+				<ul>
+					<li>種類 {{ sausage.category}}
+					<li>原價 {{ sausage.original_price }}
+					<li>售價 {{ sausage.current_price}}
+					<li>產地 {{ sausage.place_of_origin }}
+				</ul>
+				<div class="panel panel-primary">
+					<div class="panel-body"> {{ sausage.desription }} 
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
 
 	
 
-
-
-
-
-	
-	
 
 </body>
 </html>

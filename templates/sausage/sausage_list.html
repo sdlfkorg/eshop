@@ -27,29 +27,33 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-3">
-				<!-- category list -->
-				<ul class="list-group">        
-					{% for category in categories %}
+
+			<div class='col-xs-3'>
+				<ul class="list-group">  
+					{% for category in view.categories %}
 					<li class="list-group-item">
-						<a href="{% url 'sausage_list' category=category.name %}">               {{ category.name }} </a>
-					</li>
+						<a href="{% url 'sausage_list' %}">        {{ category.name }}
+						</a>
+					</li>  
 					{% endfor %}
 				</ul>
 			</div>
+
+
+
 
 			<div class="col-xs-9">
 				{% for sausage in sausage_list%}
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">
-						<a href="">          
+						<a href="{% url 'sausage_detail' pk=sausage.pk%}">          
 						{{ sausage.name}} | 產地：{{ sausage.place_of_origin }}
 					    </a>
 						</h3>
 					</div>
 					<div class="panel-body">
-						<a href="">      
+						<a href="{% url 'sausage_detail' pk=sausage.pk%}">      
 							{{ sausage.desription|truncatechars:50 }}
 						</a>
 					</div>
@@ -58,19 +62,31 @@
 					</div>	
 				</div>
 				{% endfor%}
-			</div>		
-		</div>
+
+
+
+
+				<div class="pagination">
+					<span class="step-links">    
+						{% if page_obj.has_previous %}
+						<a href="?page={{ page_obj.previous_page_number }}">previous</a>    
+						{% endif %}
+						<span class="current">
+						Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+						</span>
+						{% if page_obj.has_next %}
+						<a href="?page={{ page_obj.next_page_number }}">next</a>
+						{% endif %}
+					</span>
+				</div>
+
+			</div>	
+
+		</div> 
 	</div>
 
-
 	
 
-
-
-
-
-	
-	
 
 </body>
 </html>

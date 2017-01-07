@@ -19,7 +19,12 @@ from sausage import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', views.home, name="home"),
+    url(r'^$', views.sausage_list, name="home"),
+    #url(r'^sausages/(?P<category>.*)$', views.sausage_list, name="sausage_list"),
+    url(r'^test$', views.SausageListView.as_view(), name="sausage_list"),
+    url(r'^sausage/(?P<pk>\d+)$', views.SausageDetailView.as_view(), name="sausage_detail"),
+
+    
 
 
 ]

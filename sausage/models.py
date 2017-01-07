@@ -19,8 +19,8 @@ class Category(models.Model):
         return self.name
         
     class Meta:
-        verbose_name = "標籤"
-        verbose_name_plural = "標籤"
+        verbose_name = "分類"
+        verbose_name_plural = "分類"
 
 class Sausage(models.Model):
     name = models.CharField(verbose_name="商品名稱", max_length=255)
@@ -29,7 +29,7 @@ class Sausage(models.Model):
     default="", 
     blank=True
     )
-    
+    #verbose_name="商家", max_length=255, default="", blank=True 
     created = models.DateTimeField(verbose_name="新增時間", auto_now_add=True)
     updated = models.DateTimeField(verbose_name="更新時間", auto_now=True)
     published = models.DateTimeField(verbose_name="上架時間", null=True)
