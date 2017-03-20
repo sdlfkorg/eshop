@@ -34,6 +34,9 @@ class Sausage(models.Model):
     updated = models.DateTimeField(verbose_name="更新時間", auto_now=True)
     published = models.DateTimeField(verbose_name="上架時間", null=True)
     
+    image = models.FileField(null=True, blank=True)
+
+
     original_price = models.PositiveIntegerField(verbose_name="原價", default=0)
     current_price = models.PositiveIntegerField(verbose_name="售價", default=0)
     
@@ -59,6 +62,7 @@ class Sausage(models.Model):
     class Meta:
         verbose_name = "香腸"
         verbose_name_plural = "香腸"
+        ordering = ['-created']
         
         
         

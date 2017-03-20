@@ -1,0 +1,107 @@
+{% extends 'base_2.html' %}
+
+
+{% block style %}
+
+.suasage-jumbo{
+    background-image: url("http://www.gunzeys.com/sites/default/files/meats-jumbotron.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+}
+.title-words{
+    margin-left: 20px;
+}
+
+{% endblock %}
+
+
+{% block jumbotron %}
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron suasage-jumbo">
+
+        <div class='title-words'>
+            <h1 class=''>{{ page_title }}</h1>        
+            <h3>{{ page_intro }}</h3>
+            <h3><a class="btn btn-primary btn-large">瞭解更多</a>
+            </h3>
+        </div>        
+    </header>
+
+{% endblock jumbotron %}
+
+
+{% block content %}
+
+
+        <hr>
+
+        <ol class="breadcrumb">
+            {% for category in view.categories %}
+          <li><a href="{% url 'sausage_list' category=category.name %}">{{ category.name }}</a></li>          
+            {% endfor %}
+        </ol>
+
+
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Latest Features</h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        
+
+        <!-- Page Features -->
+        <div class="row text-center">
+            {% for sausage in sausage_list%}
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+
+                    {% if sausage.image %}
+                    <img src="{{ sausage.image.url }}" alt="">
+                    {% else %}
+                    <img src="http://placehold.it/800x500" alt="">
+                    {% endif %}
+
+                    <div class="caption">
+                        <a href="{% url 'sausage_detail' pk=sausage.pk%}">
+                            <h3>{{sausage.name}}</h3>
+                        </a>
+                        <p>{{sausage.desription}}</p>
+                        <p>
+                            <a href="{% url 'sausage_detail' pk=sausage.pk%}" class="btn btn-primary">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+        </div>
+        <!-- /.row -->
+
+        <!-- start of paginator -->
+        <div class="pagination">
+            <span class="step-links">    
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>    
+                {% endif %}
+                <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+        <!-- /.row -->
+
+
+
+        <hr>
+
+{% endblock content %}

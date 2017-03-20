@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base_2.html" %}
 
-<head>  
-	<meta charset="UTF-8">  
-	<title>My sausege store</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</head>
+{% block header %} 
 
 <style type="text/css">
 .container {
@@ -19,12 +9,12 @@
 
 </style>
 
-
-<body>
-
+{% endblock header%}
 
 
-	<div class="container">
+{% block content %}
+
+
 		<div class="row">
 			<div class="col-xs-6 col-xs-offset-3">
 				<div class="page-header">
@@ -40,13 +30,14 @@
 					<div class="panel-body"> {{ sausage.desription }} 
 					</div>
 				</div>
+
+				<!-- {% if sausage.image %}
+				<img src="{{ sausage.image.url }}" class="img-responsive">
+				{% endif %} -->
+
+
 			</div>
 		</div>
-	</div>
 
+{% endblock content %}
 
-	
-
-
-</body>
-</html>
