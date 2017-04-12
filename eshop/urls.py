@@ -14,10 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from sausage import views
+
+from django.contrib.auth import views as auth_views
+from members.forms import LoginForm
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,6 +31,11 @@ urlpatterns = [
     url(r'^sausage/about/$', views.about, name="about"),
     url(r'^sausage/(?P<pk>\d+)$', views.SausageDetailView.as_view(), name="sausage_detail"),
     url(r'^sausage/(?P<category>.*)$', views.SausageListView.as_view(), name="sausage_list"),
+
+    url(r'^login/$', auth_views.login, {'template_name': 'members/login.html', 'authentication_form': LoginForm}, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'sausage_list'}, name='logout'),
+    url(r'^members/', include('members.urls', namespace='members')),
+    # url(r'^socialauth/', include('social_django.urls', namespace='social')),
 
 
 ]

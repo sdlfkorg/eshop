@@ -52,7 +52,7 @@ class SausageListView(ListView):
         query_set = super(SausageListView, self).get_context_data()
         # Add extra content in QuerySet 
         query_set['page_title'] = "香氣四溢 沁人肝腸"
-        query_set['page_intro'] = "亞洲最多最大的香腸販售平台終於上線啦！"
+        query_set['page_intro'] = "亞洲最大的香腸販售平台終於上線啦！"
         # query_set['footer_str'] = "Tzu-Chieh Liao. All rights reserved, 2017."
 
         return query_set
