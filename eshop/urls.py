@@ -28,9 +28,13 @@ urlpatterns = [
     # url(r'^$', views.sausage_list, name="home"),
     #url(r'^sausages/(?P<category>.*)$', views.sausage_list, name="sausage_list"),
     url(r'^sausage/$', views.SausageListView.as_view(), name="sausage_list"),
+    url(r'^sausage/create$', views.SausageCreateView.as_view(), name="sausage_create"),
+    url(r'^sausage/update/(?P<pk>\d+)$', views.SausageUpdateView.as_view(), name="sausage_update"),
+
     url(r'^sausage/about/$', views.about, name="about"),
     url(r'^sausage/(?P<pk>\d+)$', views.SausageDetailView.as_view(), name="sausage_detail"),
     url(r'^sausage/(?P<category>.*)$', views.SausageListView.as_view(), name="sausage_list"),
+
 
     url(r'^login/$', auth_views.login, {'template_name': 'members/login.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'sausage_list'}, name='logout'),

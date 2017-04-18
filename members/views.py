@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import RegistrationForm
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 
@@ -14,6 +15,8 @@ class ProfileView(LoginRequiredMixin, DetailView):
     def get_object(self, *args, **kwargs):
         current_user = self.request.user
         user = super(ProfileView, self).get_object(*args, **kwargs)
+        # print(current_user)
+        # print(user)
 
         if current_user.is_superuser or \
             current_user.is_staff or current_user == user:

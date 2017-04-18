@@ -1,7 +1,13 @@
 from django.shortcuts import render
+from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms.utils import ErrorList
 from .models import Sausage, Category
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.contrib.auth.models import User
 # Create your views here.
 
 def sausage_list(request, category=None):
@@ -61,6 +67,59 @@ class SausageListView(ListView):
 
 class SausageDetailView(DetailView):
     model = Sausage
+
+
+class SausageCreateView(LoginRequiredMixin, CreateView):
+    model = Sausage 
+    login_url = reverse_lazy('login')
+
+    success_url = reverse_lazy('sausage_list')
+    fields = [
+        'name', 'description', 'image', 
+        'original_price', 'current_price', 
+        'tag', 'category', 'place_of_origin']
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.user = self.request.user
+            return super(SausageCreateView, self).form_valid(form)
+        else:
+            # return self.form_invalid(form)
+            form._errors[forms.forms.NON_FIELD_ERRORS] = \
+                ErrorList(['User must be logged in to continue.'])            
+            return self.form_invalid(form)
+
+
+class SausageUpdateView(LoginRequiredMixin, UpdateView):
+    model = Sausage
+    template_name_suffix = '_update_form'
+    fields = [
+        'name', 'description', 'image', 
+        'original_price', 'current_price', 
+        'tag', 'category', 'place_of_origin']
+    success_url = reverse_lazy('sausage_list')
+
+    def get_object(self, *args, **kwargs):
+        current_user = self.request.user
+        instance = super(SausageUpdateView, self)\
+            .get_object(*args, **kwargs)
+        user_id = instance.user_id
+        user = User.objects.get(id=user_id)
+        if current_user.is_superuser or \
+            current_user.is_staff or current_user == user:
+            return instance
+        raise PermissionDenied
+
+
+    # def form_valid(self, form):
+    #     print(form.instance.user)
+    #     print(self.request.user)
+    #     if self.request.user.is_authenticated and \
+    #         self.request.user == form.instance.user:
+    #         return super(SausageUpdateView, self).form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+
     
 
 def about(request):
@@ -70,7 +129,7 @@ def about(request):
 
     就讀農業科系的我們，大學時代在肉舖打工，跟著師父香腸伯學習製作各種肉品。
 
-    香腸伯曾告訴他：把香腸當事業要有心理準備，前3年的壓力會喘不過氣。
+    香腸伯曾告訴我們：把香腸當事業要有心理準備，前3年的壓力會喘不過氣。
 
     在結束研替後一年，我們還是堅持要做香腸。
 

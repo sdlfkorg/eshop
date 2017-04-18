@@ -71,9 +71,12 @@
                         <a href="{% url 'sausage_detail' pk=sausage.pk%}">
                             <h3>{{sausage.name}}</h3>
                         </a>
-                        <p>{{sausage.desription}}</p>
+                        <p>{{sausage.description}}</p>
                         <p>
                             <a href="{% url 'sausage_detail' pk=sausage.pk%}" class="btn btn-primary">More Info</a>
+                            {% if request.user.is_superuser or request.user == sausage.user %}
+                            <a href="{% url 'sausage_update' pk=sausage.pk%}" class="btn btn-default">商品編輯</a>
+                            {% endif %}
                         </p>
                     </div>
                 </div>

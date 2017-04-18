@@ -1,0 +1,15 @@
+{% extends 'base_2.html' %}
+
+
+{% block content %}
+
+<div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+        <form action="" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+</div>
+
+{% endblock %}

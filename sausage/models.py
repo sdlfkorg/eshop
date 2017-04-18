@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.conf import settings
+
 # Create your models here.
 
 class Tag(models.Model):
@@ -23,36 +25,31 @@ class Category(models.Model):
         verbose_name_plural = "分類"
 
 class Sausage(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     name = models.CharField(verbose_name="商品名稱", max_length=255)
-    desription = models.TextField(
-    verbose_name="商品敘述", 
-    default="", 
-    blank=True
-    )
+    description = models.TextField(
+        verbose_name="商品敘述", 
+        default="", 
+        blank=True)
     #verbose_name="商家", max_length=255, default="", blank=True 
     created = models.DateTimeField(verbose_name="新增時間", auto_now_add=True)
     updated = models.DateTimeField(verbose_name="更新時間", auto_now=True)
-    published = models.DateTimeField(verbose_name="上架時間", null=True)
-    
+    published = models.DateTimeField(verbose_name="上架時間", null=True)    
     image = models.FileField(null=True, blank=True)
-
-
     original_price = models.PositiveIntegerField(verbose_name="原價", default=0)
     current_price = models.PositiveIntegerField(verbose_name="售價", default=0)
     
     tag = models.ForeignKey(
-    Tag, 
-    verbose_name="標籤", 
-    null=True, 
-    blank=True
-    )    
+            Tag, 
+            verbose_name="標籤", 
+            null=True, 
+            blank=True)    
     
     category = models.ForeignKey(
-    Category,
-    verbose_name = "商品分類",
-    null=True,
-    blank=True
-    )
+            Category,
+            verbose_name = "商品分類",
+            null=True,
+            blank=True)
     
     place_of_origin = models.TextField(verbose_name="產地", default="", blank=True)
     
