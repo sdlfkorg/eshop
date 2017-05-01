@@ -120,20 +120,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# #    '/var/www/static/',
-# ]
+# # STATICFILES_DIRS = [
+# #     os.path.join(BASE_DIR, "static"),
+# # #    '/var/www/static/',
+# # ]
 
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
+# STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
 
 
 # LOGIN_REDIRECT_URL = 'sausage-list'
@@ -191,9 +191,28 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/sausage'
 
 
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# #    '/var/www/static/',
+# ]
+
+
+
+
+
 
 # the following code are set for heroku deployment
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
