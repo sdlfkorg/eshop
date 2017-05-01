@@ -17,10 +17,12 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from sausage import views
-
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.forms import PasswordChangeForm
+from sausage import views
 from members.forms import LoginForm
+
+# from django.contrib.auth.forms import AdminPasswordChangeForm
 
 
 urlpatterns = [
@@ -30,19 +32,29 @@ urlpatterns = [
     url(r'^sausage/$', views.SausageListView.as_view(), name="sausage_list"),
     url(r'^sausage/create$', views.SausageCreateView.as_view(), name="sausage_create"),
     url(r'^sausage/update/(?P<pk>\d+)$', views.SausageUpdateView.as_view(), name="sausage_update"),
+    url(r'^sausage/delete/(?P<pk>\d+)$', views.SausageDeleteView.as_view(), name="sausage_delete"),
+    url(r'^sausage/about$', views.AboutView.as_view(), name="about"),
 
-    url(r'^sausage/about/$', views.about, name="about"),
     url(r'^sausage/(?P<pk>\d+)$', views.SausageDetailView.as_view(), name="sausage_detail"),
     url(r'^sausage/(?P<category>.*)$', views.SausageListView.as_view(), name="sausage_list"),
+    
 
 
     url(r'^login/$', auth_views.login, {'template_name': 'members/login.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'sausage_list'}, name='logout'),
+    url(r'^password_change/$', 
+        auth_views.password_change, 
+        {
+        'post_change_redirect' : 'about',
+        'template_name': 'members/password_change.html', 
+        'password_change_form': PasswordChangeForm},
+         name='password_change'),
+    url(r'^password_change_done/$', auth_views.password_change_done, name='password_change_done'),
     url(r'^members/', include('members.urls', namespace='members')),
-    # url(r'^socialauth/', include('social_django.urls', namespace='social')),
+    url(r'^socialauth/', include('social_django.urls', namespace='social')),
 
 
-]
+    ]
 
 if settings.DEBUG:
     # urlpatterns += static(settings.STATIC_ROOT, document_root=settings.STATIC_ROOT)

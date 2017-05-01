@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # my apps
     'sausage',
     'members',
+    # the third party app
+    'social_django',
 
 ]
 
@@ -106,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hant'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -131,6 +134,63 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # ]
 
 STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
+
+
+# LOGIN_REDIRECT_URL = 'sausage-list'
+
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    # Create a user account if we haven't found one yet.
+    'social_core.pipeline.user.create_user',
+    # Create the record that associates the social account with the user.
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+SOCIAL_AUTH_DISCONNECT_PIPELINE = (
+    # Verifies that the social association can be disconnected from the current
+    # user (ensure that the user login mechanism is not compromised by this
+    # disconnection).
+    # 'social_core.pipeline.disconnect.allowed_to_disconnect',
+
+    # Collects the social associations to disconnect.
+    'social_core.pipeline.disconnect.get_entries',
+
+    # Revoke any access_token when possible.
+    'social_core.pipeline.disconnect.revoke_tokens',
+
+    # Removes the social associations.
+    'social_core.pipeline.disconnect.disconnect',
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = '956577584443991'
+SOCIAL_AUTH_FACEBOOK_SECRET = '24fe36d97a74e2b7afa3e1a13b9ab879'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'zh_TW',
+  'fields': 'id, name, email, age_range'
+}
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/sausage'
+
+
+
+
 
 # the following code are set for heroku deployment
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')

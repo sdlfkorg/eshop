@@ -35,7 +35,28 @@
     </div>
   </div>
   <div class="row">
+
+
     <!-- prepare to paste the link of some social media -->
+    <div class="col-md-offset-4 col-md-4">
+      <a href="{% url "social:begin" "facebook" %}" class="btn btn-social-icon btn-facebook">
+        <span class="fa fa-facebook"></span>
+      </a>
+      <a href="#" class="btn btn-social-icon btn-google disabled">
+        <span class="fa fa-google"></span>
+      </a>
+      <a href="#" class="btn btn-social-icon btn-twitter disabled">
+        <span class="fa fa-twitter"></span>
+      </a>
+      <a href="#" class="btn btn-social-icon btn-linkedin disabled">
+        <span class="fa fa-linkedin"></span>
+      </a>
+      <a href="#" class="btn btn-social-icon btn-github disabled">
+        <span class="fa fa-github"></span>
+      </a>
+    </div>
+
+
   </div>
   <div class="row">&nbsp;</div>
   {% if form.non_field_errors %}

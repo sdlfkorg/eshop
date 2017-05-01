@@ -1,27 +1,17 @@
 {% extends 'base_2.html' %}
 
-
 {% block content %}
-<div class='row'>
-    <div class='col-sm-8 col-sm-offset-2'>
-        <h2>{{ title }}</h2>
-        <p class='lead'>{{ description|linebreaks }}</p>
-    </div>
-</div>
-
-<hr>
 
 <div class='row'>
     <div class='col-sm-8 col-sm-offset-2'>
-        <h2 class=''>{{contact}}</h2><br>
-
-        <p class=''>
+        <h2 class='text-center'>{{title}}</h2>
+        <p class=' text-center'>
             <span class='glyphicon glyphicon-earphone'></span> : {{ phone }}
         </p>
-        <p class=''>
+        <p class=' text-center'>
             <span class='glyphicon glyphicon-home'></span> : {{ address }}
         </p>
-        <p class=''>
+        <p class=' text-center'>
             <span class='glyphicon glyphicon-envelope'></span> : {{ email }}
         </p>
 

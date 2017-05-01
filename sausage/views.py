@@ -5,19 +5,15 @@ from django.forms.utils import ErrorList
 from .models import Sausage, Category
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, \
+    UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 # Create your views here.
 
 def sausage_list(request, category=None):
 
-    sausage_list = Sausage.objects.all()
-    # sausage_list_queryset = Sausage.objects.all()
-    
-    # if category: 
-    #     sausage_list_queryset = sausage_list_queryset.filter(category__name=category)
-    
+    sausage_list = Sausage.objects.all()    
     paginator = Paginator(sausage_list, 10)
     page_number = request.GET.get('page')
 
@@ -105,51 +101,97 @@ class SausageUpdateView(LoginRequiredMixin, UpdateView):
             .get_object(*args, **kwargs)
         user_id = instance.user_id
         user = User.objects.get(id=user_id)
+        
         if current_user.is_superuser or \
             current_user.is_staff or current_user == user:
             return instance
         raise PermissionDenied
 
 
-    # def form_valid(self, form):
-    #     print(form.instance.user)
-    #     print(self.request.user)
-    #     if self.request.user.is_authenticated and \
-    #         self.request.user == form.instance.user:
-    #         return super(SausageUpdateView, self).form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
+class SausageDeleteView(LoginRequiredMixin, DeleteView):
+    model = Sausage
+    success_url = reverse_lazy('sausage_list')
+    def get_object(self, *args, **kwargs):
+        current_user = self.request.user
+        instance = super(SausageDeleteView, self)\
+            .get_object(*args, **kwargs)
+        user_id = instance.user_id
+        user = User.objects.get(id=user_id)
+        
+        if current_user.is_superuser or \
+            current_user.is_staff or current_user == user:
+            return instance
+        raise PermissionDenied
 
+# class SausageUserList()
+
+class ContactView(TemplateView):
+    template_name = 'contact.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context['title'] = '聯絡我們'
+        context['phone'] = '334-5678'
+        context['address'] = '台灣國台北市北投區'
+        context['email'] = 'sdlfkorg@gmail.com'
+        return context
+
+
+class AboutView(TemplateView):
+    template_name = 'about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context['title'] = '緣起：'
+        context['description'] = '''
+        我們是一群對著台灣肉品有著堅持的7年級生。
+
+        就讀農業科系的我們，大學時代在肉舖打工，跟著師父香腸伯學習製作各種肉品。
+
+        香腸伯曾告訴我們：把香腸當事業要有心理準備，前3年的壓力會喘不過氣。
+
+        在結束研替後一年，我們還是堅持要做香腸。
+
+        透過在大學時所學『生農為體，機電為用』，
+
+        我們對優質肉品的堅持，不只是口號，而是透過引入在台灣最高學店所學的技能、以及用心研發證明。
+
+        雖然很多人說我們傻，但為了讓台灣人享用最優質的香腸，我們仍然在這裡堅持著。
+
+        '''
+        context['contact'] = '聯絡我們'
+        context['phone'] = '334-5678'
+        context['address'] = '台灣國台北市北投區'
+        context['email'] = 'sdlfkorg@gmail.com'
+
+        return context
     
 
-def about(request):
-    title = '緣起：'
-    description = '''
-    我們是一群對著台灣肉品有著堅持的7年級生。
 
-    就讀農業科系的我們，大學時代在肉舖打工，跟著師父香腸伯學習製作各種肉品。
+# def about(request):
+#     title = '緣起：'
+#     description = '''
+#     我們是一群對著台灣肉品有著堅持的7年級生。
 
-    香腸伯曾告訴我們：把香腸當事業要有心理準備，前3年的壓力會喘不過氣。
+#     就讀農業科系的我們，大學時代在肉舖打工，跟著師父香腸伯學習製作各種肉品。
 
-    在結束研替後一年，我們還是堅持要做香腸。
+#     香腸伯曾告訴我們：把香腸當事業要有心理準備，前3年的壓力會喘不過氣。
 
-    透過在大學時所學『生農為體，機電為用』，
+#     在結束研替後一年，我們還是堅持要做香腸。
 
-    我們對優質肉品的堅持，不只是口號，而是透過引入在台灣最高學店所學的技能、以及用心研發證明。
+#     透過在大學時所學『生農為體，機電為用』，
 
-    雖然很多人說我們傻，但為了讓台灣人享用最優質的香腸，我們仍然在這裡堅持著。
+#     我們對優質肉品的堅持，不只是口號，而是透過引入在台灣最高學店所學的技能、以及用心研發證明。
 
-   '''
-    content = {
-        'title': title,
-        'description': description}
+#     雖然很多人說我們傻，但為了讓台灣人享用最優質的香腸，我們仍然在這裡堅持著。
 
-    return render(request, 'about.html', content)
+#    '''
+#     content = {
+#         'title': title,
+#         'description': description}
 
+#     return render(request, 'about.html', content)
 
-
-
-#sausages_list_view = SausageListView.as_view()
 
 
 
