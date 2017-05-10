@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'members',
     # the third party app
     'social_django',
+    'storages',
 
 ]
 
@@ -193,7 +194,64 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/sausage'
 
 
+#####
 
+AWS_ACCESS_KEY_ID = "AKIAIIN46DGE3XBJITDA"
+AWS_SECRET_ACCESS_KEY = "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"
+
+
+AWS_FILE_EXPIRE = 200
+AWS_PRELOAD_METADATA = True
+AWS_QUERYSTRING_AUTH = True
+
+DEFAULT_FILE_STORAGE = 'eshop.utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'eshop.utils.StaticRootS3BotoStorage'
+AWS_STORAGE_BUCKET_NAME = 'sdlfkorg-for-eshop'
+# S3DIRECT_REGION = 'us-west-2'
+# S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+# MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
+# MEDIA_ROOT = MEDIA_URL
+# STATIC_URL = S3_URL + 'static/'
+# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
+
+
+
+AWS_S3_HOST = 's3-ap-northeast-1.amazonaws.com'
+
+S3DIRECT_REGION = 'ap-northeast-1' # your region here
+
+S3_URL = '//s3-ap-northeast-1.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME
+
+MEDIA_URL = S3_URL + 'media/'
+
+MEDIA_ROOT = MEDIA_URL
+
+STATIC_URL = S3_URL + 'static/'
+
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
+
+
+
+
+
+
+import datetime
+
+two_months = datetime.timedelta(days=61)
+date_two_months_later = datetime.date.today() + two_months
+expires = date_two_months_later.strftime("%A, %d %B %Y 20:00:00 GMT")
+
+AWS_HEADERS = { 
+    'Expires': expires,
+    'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
+}
+
+
+
+
+#####
 
 
 # the following code are set for heroku deployment
@@ -205,7 +263,7 @@ ALLOWED_HOSTS = ['*']
 DEBUG = False
 
 try:
-    from .local_settings import *
+    from .local_setting import *
 except ImportError:
     pass
 
