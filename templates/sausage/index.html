@@ -1,10 +1,10 @@
 {% extends 'base_2.html' %}
-
+{% load staticfiles %}
 
 {% block style %}
 
 .suasage-jumbo{
-    background-image: url("http://www.gunzeys.com/sites/default/files/meats-jumbotron.jpg");
+    background-image: url("{% static 'image/sausage_jumbotron.jpg'%}");
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
@@ -64,7 +64,7 @@
                     {% if sausage.image %}
                     <img src="{{ sausage.image.url }}" alt="">
                     {% else %}
-                    <img src="http://placehold.it/800x500" alt="">
+                    <img src="{% static 'image/800_500.png' %}" alt="">
                     {% endif %}
 
                     <div class="caption">

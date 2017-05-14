@@ -196,6 +196,7 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/sausage'
 
 #####
 
+
 AWS_ACCESS_KEY_ID = "AKIAIIN46DGE3XBJITDA"
 AWS_SECRET_ACCESS_KEY = "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"
 
@@ -207,6 +208,7 @@ AWS_QUERYSTRING_AUTH = True
 DEFAULT_FILE_STORAGE = 'eshop.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'eshop.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'sdlfkorg-for-eshop'
+
 # S3DIRECT_REGION = 'us-west-2'
 # S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 # MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
@@ -232,7 +234,7 @@ STATIC_URL = S3_URL + 'static/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 
-
+#####
 
 
 
