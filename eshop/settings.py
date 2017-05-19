@@ -106,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -124,25 +123,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# #    '/var/www/static/',
-# ]
-
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
-
-
-# LOGIN_REDIRECT_URL = 'sausage-list'
-
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
@@ -181,8 +167,8 @@ SOCIAL_AUTH_DISCONNECT_PIPELINE = (
     'social_core.pipeline.disconnect.disconnect',
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = '956577584443991'
-SOCIAL_AUTH_FACEBOOK_SECRET = '24fe36d97a74e2b7afa3e1a13b9ab879'
+SOCIAL_AUTH_FACEBOOK_KEY = '' # your FACEBOOK_KEY
+SOCIAL_AUTH_FACEBOOK_SECRET = '' # your FACEBOOK_SECRET
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
@@ -194,12 +180,10 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/sausage'
 
 
-#####
+###### The following is setting about AWS S3 bucket ######
 
-
-AWS_ACCESS_KEY_ID = "AKIAIIN46DGE3XBJITDA"
-AWS_SECRET_ACCESS_KEY = "aA8mshHjFVCdHvpCmok/Vv+f4WB9HwuyiI9WEZW1"
-
+AWS_ACCESS_KEY_ID = "" # your AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = "" # your AWS_SECRET_ACCESS_KEY
 
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
@@ -207,37 +191,14 @@ AWS_QUERYSTRING_AUTH = True
 
 DEFAULT_FILE_STORAGE = 'eshop.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'eshop.utils.StaticRootS3BotoStorage'
-AWS_STORAGE_BUCKET_NAME = 'sdlfkorg-for-eshop'
-
-# S3DIRECT_REGION = 'us-west-2'
-# S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-# MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
-# MEDIA_ROOT = MEDIA_URL
-# STATIC_URL = S3_URL + 'static/'
-# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-
-
-
+AWS_STORAGE_BUCKET_NAME = '' # your bucket name
 AWS_S3_HOST = 's3-ap-northeast-1.amazonaws.com'
-
 S3DIRECT_REGION = 'ap-northeast-1' # your region here
-
 S3_URL = '//s3-ap-northeast-1.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME
-
 MEDIA_URL = S3_URL + 'media/'
-
 MEDIA_ROOT = MEDIA_URL
-
 STATIC_URL = S3_URL + 'static/'
-
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-
-#####
-
-
-
 
 import datetime
 
@@ -250,14 +211,11 @@ AWS_HEADERS = {
     'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
 }
 
+###### The above is setting about AWS S3 bucket ######
 
 
+###### the following code are set for heroku deployment ######
 
-#####
-
-
-# the following code are set for heroku deployment
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
